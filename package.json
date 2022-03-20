@@ -1,0 +1,25 @@
+{
+  "name": "jsbot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teavver/jsbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teavver/jsbot/issues"
+  },
+  "homepage": "https://github.com/teavver/jsbot#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "node-fetch": "^3.2.3"
+  }
+}
