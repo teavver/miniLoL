@@ -8,18 +8,17 @@ import 'dotenv/config';
 const sp = ("%20");
 // create client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-// riotKey
-const riotKey = ''
+//
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
-// help command w/o dollar sign
+// $help command
 client.on("messageCreate", msg => {
   if (msg.content === "$help") {
-    msg.reply("Type \`$help\` to see help for all commands. Type \`$help command-name\` To get more information about a specific command.")
+    msg.reply("Type \`$help-all\` to see help for all commands. Type \`$help command-name\` To get more information about a specific command.")
   }
   if(msg.content.includes('$user')) {
-    const username = msg.content.slice(6).replace(' ', "%20")
+    const username = replaceAll(msg.content.slice(6), " ","%20")
     // msg.reply(username)
     request('eun1', username).then(data => {
         msg.reply(data.summonerLevel.toString())
@@ -39,3 +38,6 @@ client.on("messageCreate", msg => {
 const botToken = process.env.TOKEN
 client.login(process.env.TOKEN)
 
+function replaceAll(str, find, replace) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
