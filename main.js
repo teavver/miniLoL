@@ -24,7 +24,10 @@ client.on("messageCreate", msg => {
       async function req() {
        const data = await request('eun1', username)
        const data2 = await request2('eun1', data.id)
-       msg.reply(`${data.summonerLevel},${data2.rank},${data2.leaguePoints}`)
+       let wr = data2.wins/(data2.wins+data2.losses)*100
+       let shortwr = wr.toFixed(0)
+       // w msg reply w miejscu ${username} potrzebny jest `slice()` w drugą strone zeby ucinało '$user' ale żeby też nie zwracało spacji w '%20' 
+       msg.reply(`Information about summoner ${data2.summonerName}:\n\`Summoner level: ${data.summonerLevel}\`\n\`Tier: ${data2.tier} ${data2.rank}\`\n\`Wins: ${data2.wins}, Losses: ${data2.losses}\`\n\`Winrate: ${shortwr}%\``)
       }
     }
 })
