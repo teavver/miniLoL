@@ -1,6 +1,6 @@
 // require Discord API
 import { Client, Intents } from 'discord.js';
-import request from './request.js';
+import request, { request2 } from './request.js';
 import 'dotenv/config';
 
 
@@ -17,20 +17,16 @@ client.on("messageCreate", msg => {
   if (msg.content === "$help") {
     msg.reply("Type \`$help-all\` to see help for all commands. Type \`$help command-name\` To get more information about a specific command.")
   }
+  // $user command
   if(msg.content.includes('$user')) {
     const username = replaceAll(msg.content.slice(6), " ","%20")
-    // msg.reply(username)
-    request('eun1', username).then(data => {
-        msg.reply(data.summonerLevel.toString())
-        msg.reply(data.rank.toString())
-    })
-
-    // (async () => {
-    //   const data = await request('eun1','l9%20itachi')
-    //   msg.reply(data.summonerLevel.toString())
-    // })()
-  }
-
+     req()
+      async function req() {
+       const data = await request('eun1', username)
+       const data2 = await request2('eun1', data.id)
+       msg.reply(`${data.summonerLevel},${data2.rank},${data2.leaguePoints}`)
+      }
+    }
 })
 
 // user input -> summoner v4 -> match v4 -> fetch data from riot API -> save it in  json 
@@ -42,6 +38,3 @@ client.login(process.env.TOKEN)
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
-
-// league v4 - >> wszytkie dane
-// /lol/league/v4/entries/by-summoner/{encryptedSummonerId} Get league entries in all queues for a given summoner ID
