@@ -4,8 +4,7 @@ import fetch from "node-fetch"
 // const sumName = 'l9%20itachi' 
 // const sp = ("%20")
 
-
-async function request(_server, _sumName){
+export default async function request(_server, _sumName){
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${_sumName}`, {
         method: 'get',
         headers: {
@@ -23,14 +22,3 @@ async function request(_server, _sumName){
     
 
 }
-
-export default request;
-
-// async function main(){
-//     const res = await request(server, sumName)
-//     console.log(res)
-// }
-
-// main()
-
-// console.log(request())

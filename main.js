@@ -1,8 +1,8 @@
 // require Discord API
 import { Client, Intents } from 'discord.js';
-import request from './request';
-// require fetch API
-// const fetch = require("node-fetch");
+import request from './request.js';
+
+
 // changing space to space character in order to avoid spacing errors
 const sp = ("%20");
 // create client
