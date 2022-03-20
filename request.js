@@ -13,7 +13,7 @@ export default async function request(_server, _sumName){
         accountId: data.accountId,
         name: data.name,
         profileIconId: data.profileIconId,
-        summonerLevel: data.summonerLevel
+        summonerLevel: data.summonerLevel 
     }
     
 

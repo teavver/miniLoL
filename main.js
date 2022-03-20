@@ -22,6 +22,7 @@ client.on("messageCreate", msg => {
     // msg.reply(username)
     request('eun1', username).then(data => {
         msg.reply(data.summonerLevel.toString())
+        msg.reply(data.rank.toString())
     })
 
     // (async () => {
@@ -41,3 +42,6 @@ client.login(process.env.TOKEN)
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
+
+// league v4 - >> wszytkie dane
+// /lol/league/v4/entries/by-summoner/{encryptedSummonerId} Get league entries in all queues for a given summoner ID
