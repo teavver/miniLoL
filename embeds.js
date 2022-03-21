@@ -1,23 +1,23 @@
 import { MessageEmbed } from "discord.js";
 
-export const helpEmbed = new MessageEmbed()
+
+export default function helpEmbed(data,data2,username,shortwr) {
+    const helpEmbed = new MessageEmbed()
     .setColor('#0099ff')
     // summoner name from main.js + jsbot icon
-    .setAuthor({ name: '(EUNE) L9 Itachi',})
+    .setAuthor({ name: `(EUNE) ${data.name}`})
+    // opgg link
+    .setTitle('Summoner\'s OPGG')
+    .setURL(`https://eune.op.gg/summoners/eune/${username}`)
     // data import from main.js 
-    .setDescription('Diamond 4 | 26W | 26L | 50%WR')
-    .setThumbnail('https://i.imgur.com/UzxApzy.jpg')
+    .setDescription(`${data2.tier} ${data2.rank} | ${data2.wins}W / ${data2.losses}L | ${shortwr}%WR`)
+    .setThumbnail(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
     .addFields(
         { name: '\u200B', value: '\u200B' },
         { name: 'Ranked Solo/Duo', value: '\`Win\`, 26:55', inline: true },
         { name: 'Ranked Solo/Duo', value: '\`Loss\`, 16:32', inline: true },
         { name: 'Ranked Solo/Duo', value: '\`Win\`, 41:35', inline: true },
     )
-    .setFooter({ text:'OPGG:' ,url:'https://eune.op.gg/summoners/eune/L9%20Itachi'});
+    return helpEmbed;
+}
 
-
-
-export const smmnrEmbed = new MessageEmbed()
-    .setColor('GREY')
-    .setThumbnail('https://i.imgur.com/UzxApzy.jpg')
-    

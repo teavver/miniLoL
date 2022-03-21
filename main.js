@@ -2,7 +2,7 @@
 import { Channel, Client, Intents, MessageEmbed} from 'discord.js';
 import request, { request2 } from './request.js';
 import 'dotenv/config';
-import {helpEmbed} from './embeds.js'
+import helpEmbed from './embeds.js'
 // import './embeds.js';
 // message embed utility
 // const { MessageEmbed } = require('discord.js')
@@ -28,11 +28,18 @@ client.on("messageCreate", msg => {
      req()
       async function req() {
        const data = await request('eun1', username)
-       const data2 = await request2('eun1', data.id)
-       const wr = data2.wins/(data2.wins+data2.losses)*100
-       const shortwr = wr.toFixed(0)
-       msg.reply(`Information about summoner ${data2.summonerName}:\n\`Summoner level: ${data.summonerLevel}\`\n\`Tier: ${data2.tier} ${data2.rank}\`\n\`Wins: ${data2.wins}, Losses: ${data2.losses}\`\n\`Winrate: ${shortwr}%\``)
-      }
+       if (data.status) {
+        const data2 = await request2('eun1', data.id)
+        const wr = data2.wins/(data2.wins+data2.losses)*100
+        const shortwr = wr.toFixed(0)
+        const reply = helpEmbed(data,data2,username,shortwr)
+        msg.reply({ embeds: [reply] });
+       } else {
+         msg.reply(`Summoner not found in the database`)
+       }
+       
+       // msg.reply(`Information about summoner ${data2.summonerName}:\n\`Summoner level: ${data.summonerLevel}\`\n\`Tier: ${data2.tier} ${data2.rank}\`\n\`Wins: ${data2.wins}, Losses: ${data2.losses}\`\n\`Winrate: ${shortwr}%\``)
+      } 
     }
 })
 

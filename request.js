@@ -1,5 +1,6 @@
 import fetch from "node-fetch"
 import 'dotenv/config';
+import { MessageSelectMenu } from "discord.js";
 
 export default async function request(_server, _sumName){
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${_sumName}`, {
@@ -9,12 +10,19 @@ export default async function request(_server, _sumName){
         }
     })
     const data = await response.json()
+    const status = response.status
+    if (status == 404) {
+        return {
+            status: false
+        }
+    }
     return {
         accountId: data.accountId,
         name: data.name,
         profileIconId: data.profileIconId,
         summonerLevel: data.summonerLevel,
-        id: data.id
+        id: data.id,
+        status: true
     }
 }
 
