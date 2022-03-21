@@ -1,7 +1,9 @@
 // require Discord API
-import { Client, Intents } from 'discord.js';
+import { Channel, Client, Intents, MessageEmbed} from 'discord.js';
 import request, { request2 } from './request.js';
 import 'dotenv/config';
+import {helpEmbed} from './embeds.js'
+// import './embeds.js';
 // message embed utility
 // const { MessageEmbed } = require('discord.js')
 
@@ -17,7 +19,8 @@ client.on("ready", () => {
 // $help command
 client.on("messageCreate", msg => {
   if (msg.content === "$help") {
-    msg.reply("Type \`$help-all\` to see help for all commands. Type \`$help command-name\` To get more information about a specific command.")
+    msg.reply({ embeds: [helpEmbed] });
+    // msg.reply("Type \`$help-all\` to see help for all commands. Type \`$help command-name\` To get more information about a specific command.")
   }
   // $user command
   if(msg.content.includes('$user')) {
@@ -26,9 +29,8 @@ client.on("messageCreate", msg => {
       async function req() {
        const data = await request('eun1', username)
        const data2 = await request2('eun1', data.id)
-       let wr = data2.wins/(data2.wins+data2.losses)*100
-       let shortwr = wr.toFixed(0)
-       // w msg reply w miejscu ${username} potrzebny jest `slice()` w drugą strone zeby ucinało '$user' ale żeby też nie zwracało spacji w '%20' 
+       const wr = data2.wins/(data2.wins+data2.losses)*100
+       const shortwr = wr.toFixed(0)
        msg.reply(`Information about summoner ${data2.summonerName}:\n\`Summoner level: ${data.summonerLevel}\`\n\`Tier: ${data2.tier} ${data2.rank}\`\n\`Wins: ${data2.wins}, Losses: ${data2.losses}\`\n\`Winrate: ${shortwr}%\``)
       }
     }
