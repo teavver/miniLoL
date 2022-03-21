@@ -2,6 +2,8 @@
 import { Client, Intents } from 'discord.js';
 import request, { request2 } from './request.js';
 import 'dotenv/config';
+// message embed utility
+// const { MessageEmbed } = require('discord.js')
 
 
 // changing space to space character in order to avoid spacing errors
