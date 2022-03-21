@@ -5,17 +5,15 @@ export const helpEmbed = new MessageEmbed()
     // summoner name from main.js + jsbot icon
     .setAuthor({ name: '(EUNE) L9 Itachi',})
     // data import from main.js 
-    .setDescription('Diamond 4 | 26W 26L 50%WR')
+    .setDescription('Diamond 4 | 26W | 26L | 50%WR')
     .setThumbnail('https://i.imgur.com/UzxApzy.jpg')
     .addFields(
         { name: '\u200B', value: '\u200B' },
-        { name: 'Ranked Solo/Duo', value: '[W]: 26:55', inline: true },
-        { name: 'Ranked Solo/Duo', value: '[L]: 16:32', inline: true },
-        { name: 'Ranked Solo/Duo', value: '[W]: 41:35', inline: true },
+        { name: 'Ranked Solo/Duo', value: '\`Win\`, 26:55', inline: true },
+        { name: 'Ranked Solo/Duo', value: '\`Loss\`, 16:32', inline: true },
+        { name: 'Ranked Solo/Duo', value: '\`Win\`, 41:35', inline: true },
     )
-    .setTimestamp()
-    .setFooter({ text: 'Check player\'s opgg: https://eune.op.gg/summoners/eune/L9%20Itachi' });
-
+    .setFooter({ text:'OPGG:' ,url:'https://eune.op.gg/summoners/eune/L9%20Itachi'});
 
 
 
