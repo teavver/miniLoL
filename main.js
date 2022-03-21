@@ -52,3 +52,10 @@ client.login(process.env.TOKEN)
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
+
+
+// uciete z package-lock.json w linijce 27, po "zod": "^3.11.6"
+// "engines": {
+//   "node": ">=16.0.0",
+//   "npm": ">=7.0.0"
+// }
