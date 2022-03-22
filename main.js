@@ -34,17 +34,13 @@ client.on("messageCreate", msg => {
         const shortwr = wr.toFixed(0)
         const reply = helpEmbed(data,data2,username,shortwr)
         msg.reply({ embeds: [reply] });
+        console.log(data2.wins,data2.losses,wr,shortwr)
        } else {
          msg.reply(`Summoner not found in the database`)
        }
-       
-       // msg.reply(`Information about summoner ${data2.summonerName}:\n\`Summoner level: ${data.summonerLevel}\`\n\`Tier: ${data2.tier} ${data2.rank}\`\n\`Wins: ${data2.wins}, Losses: ${data2.losses}\`\n\`Winrate: ${shortwr}%\``)
       } 
     }
 })
-
-// user input -> summoner v4 -> match v4 -> fetch data from riot API -> save it in  json 
-// read json and display in discord (5 last games and summoner info like rank, lvl, etc) -> ui interface
 
 const botToken = process.env.TOKEN
 client.login(process.env.TOKEN)
@@ -54,8 +50,31 @@ function replaceAll(str, find, replace) {
 }
 
 
-// uciete z package-lock.json w linijce 27, po "zod": "^3.11.6"
-// "engines": {
-//   "node": ">=16.0.0",
-//   "npm": ">=7.0.0"
-// }
+// status code:
+// 400 - bad request (jeszcze nie bylo takiego przypadku)
+// 404 - not found (jak nie ma takiego konta na serwerze)
+// 200 - poszlo
+
+// funkcja 1()  {
+  // riotAPI(eune) -> wyszukaj summonera po nazwie
+  // store statusCode.eune
+  // riotAPI(euw) -> wyszukaj summonera po nazwie
+  // store statusCode.euw
+  // if (statusCode.eune i statusCode.euw = 200) {
+
+  //   popros usera o wpisanie serwera $euw lub $eune
+  //   jesli user input = $eune -> funkcja replyEune
+  //   jesli user input = $euw -> funkcja replyEuw
+
+  //   else return/abort/nic nie odpowiadaj
+  //   else if (statusCode.eune = 200 || statusCode.euw = 404) {
+  //     funkcja() replyEune()
+  //   }
+  //   else if (statusCode.euw = 200 || statusCode.eune = 404) {
+  //     funkcja() replyEuw()
+  //   }
+  //   else {
+  //     reply nie znaleziono summonera
+  //   }
+  // }
+//}
