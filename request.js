@@ -34,9 +34,9 @@ export async function requestSpecificData(_server, _Id) {
         }
     })
     const json = await response.json()
-    // sprawdza czy dlugosc tablicy jest wieksza od 1, jesli tak to zwroc tylko s/d range, jesli nie to zwroc
-    // jedyną range na koncie 
+
     let data
+    if (json.length == 0) return {status:false}
     if (json.length > 1) data = json[1]
     else data = json[0]
     
