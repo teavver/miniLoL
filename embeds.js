@@ -1,16 +1,17 @@
 import { MessageEmbed } from "discord.js";
 
 
-export default function helpEmbed(data,data2,username,shortwr) {
-    const helpEmbed = new MessageEmbed()
+export default function endReply(data,data2,username,shortwr,serverText) {
+    const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
+    const endReply = new MessageEmbed()
     .setColor('#0099ff')
     // summoner name from main.js + jsbot icon
-    .setAuthor({ name: `(EUNE) ${data.name}`})
+    .setAuthor({ name: `(${serverText.toUpperCase()}) ${data.name}`})
     // opgg link
     .setTitle(`${data.name}\'s OPGG`)
-    .setURL(`https://eune.op.gg/summoners/eune/${username}`)
+    .setURL(`https://${serverText}.op.gg/summoners/eune/${username}`)
     // data import from main.js 
-    .setDescription(`${data2.tier} ${data2.rank} | ${data2.wins}W / ${data2.losses}L | ${shortwr}%WR`)
+    .setDescription(`${queueTypeText} ${data2.tier} ${data2.rank} | ${data2.wins}W / ${data2.losses}L | ${shortwr}%WR`)
     .setThumbnail(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
     .addFields(
         { name: '\u200B', value: '\u200B' },
@@ -18,6 +19,6 @@ export default function helpEmbed(data,data2,username,shortwr) {
         { name: 'Ranked Solo/Duo', value: '\`Loss\`, 16:32', inline: true },
         { name: 'Ranked Solo/Duo', value: '\`Win\`, 41:35', inline: true },
     )
-    return helpEmbed;
+    return endReply;
 }
 
