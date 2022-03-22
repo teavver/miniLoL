@@ -2,7 +2,7 @@ import fetch from "node-fetch"
 import 'dotenv/config';
 import { MessageSelectMenu } from "discord.js";
 
-export default async function request(_server, _sumName){
+export async function requestBasicData(_server, _sumName){
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${_sumName}`, {
         method: 'get',
         headers: {
@@ -26,15 +26,19 @@ export default async function request(_server, _sumName){
     }
 }
 
-export async function request2(_server, _accountId) {
-    const response = await fetch(`https://${_server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${_accountId}`, {
+export async function requestSpecificData(_server, _Id) {
+    const response = await fetch(`https://${_server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${_Id}`, {
         method: 'get',
         headers: {
             "X-Riot-Token": process.env.RIOT_TOKEN
         }
     })
-    const data2 = await response.json()
-    const data = data2[0]
+    const json = await response.json()
+    // sprawdza czy dlugosc tablicy jest wieksza od 1, jesli tak to zwroc tylko s/d range, jesli nie to zwroc
+    // jedyną range na koncie 
+    let data
+    if (json.length > 1) data = json[1]
+    else data = json[0]
     
     return {
         queueType: data.queueType,
@@ -48,3 +52,23 @@ export async function request2(_server, _accountId) {
 
 }
 
+// export async function requestServer
+
+
+
+
+
+
+
+
+// export async function requestMatches(_server, _accountId) {
+//     const response = await fetch(`https://${_server}.api.riotgames.com/lol/v1.3/game/by-summoner/${_accountId}/recent`, {
+//         method: 'get',
+//         headers: {
+//             "X-Riot-Token": process.env.RIOT_TOKEN
+//         }
+//     })
+//     const json = await response.json()
+//     const data = json[0]
+    
+// }
