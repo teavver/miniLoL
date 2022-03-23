@@ -1,8 +1,9 @@
 // require Discord API
 import { Channel, Client, Intents, MessageEmbed} from 'discord.js';
-import request, { request2 } from './request.js';
+import {requestBasicData, requestSpecificData} from './request.js';
 import 'dotenv/config';
 import helpEmbed from './embeds.js'
+import endReply from './embeds.js';
 // import './embeds.js';
 // message embed utility
 // const { MessageEmbed } = require('discord.js')
@@ -11,40 +12,117 @@ import helpEmbed from './embeds.js'
 // changing space to space character in order to avoid spacing errors
 const sp = ("%20");
 // create client
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 //
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
-// $help command
-client.on("messageCreate", msg => {
-  if (msg.content === "$help") {
-    msg.reply({ embeds: [helpEmbed] });
-    // msg.reply("Type \`$help-all\` to see help for all commands. Type \`$help command-name\` To get more information about a specific command.")
-  }
-  // $user command
-  if(msg.content.includes('$user')) {
-    const username = replaceAll(msg.content.slice(6), " ","%20")
-     req()
-      async function req() {
-       const data = await request('eun1', username)
-       if (data.status) {
-        const data2 = await request2('eun1', data.id)
-        const wr = data2.wins/(data2.wins+data2.losses)*100
-        const shortwr = wr.toFixed(0)
-        const reply = helpEmbed(data,data2,username,shortwr)
-        msg.reply({ embeds: [reply] });
-       } else {
-         msg.reply(`Summoner not found in the database`)
-       }
-       
-       // msg.reply(`Information about summoner ${data2.summonerName}:\n\`Summoner level: ${data.summonerLevel}\`\n\`Tier: ${data2.tier} ${data2.rank}\`\n\`Wins: ${data2.wins}, Losses: ${data2.losses}\`\n\`Winrate: ${shortwr}%\``)
-      } 
-    }
-})
 
-// user input -> summoner v4 -> match v4 -> fetch data from riot API -> save it in  json 
-// read json and display in discord (5 last games and summoner info like rank, lvl, etc) -> ui interface
+client.on('interactionCreate', async interaction => {
+	if (!interaction.isCommand()) return;
+
+	const { commandName, options } = interaction;
+
+	if (commandName === 'user') {
+		const message = await interaction.reply({ content: 'You can react with Unicode emojis!', fetchReply: true });
+    message.react('😹')
+    console.log(options.getString('summoner'))
+	}
+});
+// /user {nazwa} -> enter -> zwroci sprecyzuj serwer
+// /user {nazwa} {serwer} -> zwraca info o typie
+
+// client.on('interactionCreate', async interaction => {
+//   if (!interaction.isCommand()) return;
+
+//   const {commandName} = interaction;
+
+//   if (commandName === 'user')
+//   // /user command
+//   {
+//     const username = replaceAll(msg.content.slice(6), " ","%20")
+//     const dataEun = await requestBasicData('eun1', username)
+//     const dataEuw = await requestBasicData('euw1', username)
+//     //if (dataEun.status == true && dataEuw.status == true) {
+//       const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server', fetchReply: true})
+//       message.react('😄');
+//     //}
+//     if (dataEun.status == true && dataEuw.status == false) {
+//       const message = await interaction.reply({content: reply(dataEun, 'eun1', interaction, username)})
+//       message.react('😄');
+//    }
+//     if (dataEun.status == false && dataEuw.status == true) {
+//       const message = await interaction.reply({content: reply(dataEuw, 'euw1', interaction, username)})
+//       message.react('😄');
+//     }
+//     if (dataEun.status == false && dataEuw.status == false) {
+//       const message = await interaction.reply({content: `Summoner not found`})
+//       message.react('😄');
+//      }
+
+//    }
+//  })
+
+
+ client.on("messageCreate", msg => {
+   // $user command
+   if(msg.content.includes('$user')) {
+     const username = replaceAll(msg.content.slice(6), " ","%20")
+      req()
+       async function req() {
+        const dataEun = await requestBasicData('eun1', username)
+        const dataEuw = await requestBasicData('euw1', username)
+        if (dataEun.status == true && dataEuw.status == true) {
+          msg.reply(`Summoner name is taken on both EUW and EUNE servers, please specify the server`)
+        }
+        if (dataEun.status == true && dataEuw.status == false) {
+         reply(dataEun, 'eun1', msg, username)
+       }
+        if (dataEun.status == false && dataEuw.status == true) {
+          reply(dataEuw, 'euw1', msg, username)
+        }
+        if (dataEun.status == false && dataEuw.status == false) {
+          msg.reply(`Summoner not found`)
+        }
+
+       //  if (data.status) {
+       //   console.log(data2.wins,data2.losses,wr,shortwr)
+       //  } else {
+       //    msg.reply(`Summoner not found in the database`)
+       //  }
+       } 
+     }
+     if(msg.content.includes('$euw')) {
+       const username = replaceAll(msg.content.slice(5), " ","%20")
+       req()
+        async function req() {
+        const dataEuw = await requestBasicData('euw1', username)
+        if (dataEuw.status == true) {
+          reply(dataEuw, 'euw1', msg, username)
+        }
+       }
+     }
+     if(msg.content.includes('$eune')) {
+       const username = replaceAll(msg.content.slice(6), " ","%20")
+       req()
+       async function req() {
+       const dataEun = await requestBasicData('eun1', username)
+       if (dataEun.status == true) {
+         reply(dataEun, 'eun1', msg, username)
+       }
+     }  
+    }
+ })
+
+ async function reply(_data, _server, interaction, _username) {
+   const serverText = (_server==='eun1') ? 'eune':'euw'
+   console.log(serverText)
+   const dataSpec = await requestSpecificData(_server,_data.id)
+   const shortwr = (dataSpec.wins/(dataSpec.wins+dataSpec.losses)*100).toFixed(0)
+   const reply = endReply(_data,dataSpec,_username,shortwr,serverText)
+   interaction.reply({ embeds: [reply] })
+ }
+
 
 const botToken = process.env.TOKEN
 client.login(process.env.TOKEN)
@@ -52,3 +130,4 @@ client.login(process.env.TOKEN)
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
 }
+
