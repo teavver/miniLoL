@@ -11,7 +11,7 @@ export default function endReply(data,data2,username,shortwr,serverText) {
     }
 
     else {
-        description = `${queueTypeText} \`${data2.tier} ${data2.rank}\` | \`${data2.wins}W\` / \`${data2.losses}L\` | \`${shortwr}%WR\``
+        description = `${queueTypeText} **${data2.tier} ${data2.rank}** | **${data2.wins}W / ${data2.losses}L\** | **${shortwr}%WR\**`
     }
     const endReply = new MessageEmbed()
     .setColor('#0099ff')
@@ -25,9 +25,9 @@ export default function endReply(data,data2,username,shortwr,serverText) {
     .setThumbnail(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
     .addFields(
         { name: '\u200B', value: '\u200B' },
-        { name: 'Ranked Solo/Duo', value: '\`Win\`, 26:55', inline: true },
-        { name: 'Ranked Solo/Duo', value: '\`Loss\`, 16:32', inline: true },
-        { name: 'Ranked Solo/Duo', value: '\`Win\`, 41:35', inline: true },
+        { name: 'Ranked Solo/Duo', value: '*\*Win\**, 26:55', inline: true },
+        { name: 'Ranked Solo/Duo', value: '*\*Loss\**, 16:32', inline: true },
+        { name: 'Ranked Solo/Duo', value: '*\*Win\**, 41:35', inline: true },
     )
     return endReply;
 }
