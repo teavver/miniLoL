@@ -4,15 +4,19 @@ import { MessageEmbed } from "discord.js";
 export default function endReply(data,data2,username,shortwr,serverText) {
     let description
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
-    if (data2.queueType == undefined) {
-        description = `Summoner has no rank or no recent ranked matches`
-    } else {
+    if (data2.queueType == undefined && data2.summonerLevel < 30) {
+        description = `Summoner is below lvl 30.`
+    } else if (data2.queueType == undefined) {
+        description = `Summoner has no rank or no recent ranked games`
+    }
+
+    else {
         description = `${queueTypeText} ${data2.tier} ${data2.rank} | ${data2.wins}W / ${data2.losses}L | ${shortwr}%WR`
     }
     const endReply = new MessageEmbed()
     .setColor('#0099ff')
     // summoner name from main.js + jsbot icon
-    .setAuthor({ name: `(${serverText.toUpperCase()}) ${data.name}`})
+    .setAuthor({ name: `(${serverText.toUpperCase()}) (${data.summonerLevel}) ${data.name}`})
     // opgg link
     .setTitle(`${data.name}\'s OPGG`)
     .setURL(`https://${serverText}.op.gg/summoners/eune/${username}`)
