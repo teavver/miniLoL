@@ -4,6 +4,12 @@ import { MessageEmbed } from "discord.js";
 export default function endReply(data,data2,username,shortwr,serverText) {
     let description
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
+    // if (lowLvl == true) {
+    //    description = `summoner lvl is below 30`
+    // } else if (data2.queueType == undefined && lowLvl == false) {
+    // description = `summoner has no recent ranked games`
+    // } else [19]
+    // 
     if (data2.queueType == undefined && data2.summonerLevel < 30) {
         description = `Summoner is below lvl 30.`
     } else if (data2.queueType == undefined) {
@@ -11,7 +17,7 @@ export default function endReply(data,data2,username,shortwr,serverText) {
     }
 
     else {
-        description = `${queueTypeText} ${data2.tier} ${data2.rank} | ${data2.wins}W / ${data2.losses}L | ${shortwr}%WR`
+        description = `${queueTypeText} \`${data2.tier} ${data2.rank}\` | \`${data2.wins}W\` / \`${data2.losses}L\` | \`${shortwr}%WR\``
     }
     const endReply = new MessageEmbed()
     .setColor('#0099ff')
