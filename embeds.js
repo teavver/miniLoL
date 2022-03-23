@@ -4,14 +4,7 @@ import { MessageEmbed } from "discord.js";
 export default function endReply(data,data2,username,shortwr,serverText) {
     let description
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
-    // if (lowLvl == true) {
-    //    description = `summoner lvl is below 30`
-    // } else if (data2.queueType == undefined && lowLvl == false) {
-    // description = `summoner has no recent ranked games`
-    // } else {description = `dane`
-    // }
-    // 
-    if (data2.queueType == undefined && data2.summonerLevel < 30) {
+    if (data2.queueType == undefined && data.summonerLevel < 30) {
         description = `Summoner is below lvl 30.`
     } else if (data2.queueType == undefined) {
         description = `Summoner has no rank or no recent ranked games`

@@ -18,6 +18,18 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
+client.on("messageCreate", async interaction => {
+  if (!interaction.isCommand()) return;
+
+  const { commandName } =  interaction;
+
+  if (commandName === 'user') {
+    const username = replaceAll(msg.content.slice(6), " ","%20")
+    const message = await interaction.reply({content: })
+  }
+})
+
+
 client.on("messageCreate", msg => {
   // $user command
   if(msg.content.includes('$user')) {
@@ -26,7 +38,6 @@ client.on("messageCreate", msg => {
       async function req() {
        const dataEun = await requestBasicData('eun1', username)
        const dataEuw = await requestBasicData('euw1', username)
-       console.log(dataEun, dataEuw)
        if (dataEun.status == true && dataEuw.status == true) {
          msg.reply(`Summoner name is taken on both EUW and EUNE servers, please specify the server`)
        }
