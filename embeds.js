@@ -8,7 +8,7 @@ export default function endReply(data,data2,username,shortwr,serverText) {
     //    description = `summoner lvl is below 30`
     // } else if (data2.queueType == undefined && lowLvl == false) {
     // description = `summoner has no recent ranked games`
-    // } else [19]
+    // } description = `dane`
     // 
     if (data2.queueType == undefined && data2.summonerLevel < 30) {
         description = `Summoner is below lvl 30.`
