@@ -37,7 +37,7 @@ export async function requestSpecificData(_server, _Id) {
     let data
     if (json.length == 0) return {status:false}
 
-    if(json[0].queueType == 'RANKED_FLEX_SR') data = json[1]
+    if(json[0].queueType == 'RANKED_FLEX_SR'||'RANKED_TFT_PAIRS') data = json[1]
     else data = json[0]
 
 
