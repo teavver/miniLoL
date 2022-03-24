@@ -1,6 +1,5 @@
 import fetch from "node-fetch"
 import 'dotenv/config';
-import { MessageSelectMenu } from "discord.js";
 
 export async function requestBasicData(_server, _sumName){
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${_sumName}`, {
