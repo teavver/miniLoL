@@ -36,9 +36,12 @@ export async function requestSpecificData(_server, _Id) {
 
     let data
     if (json.length == 0) return {status:false}
-    if (json.length > 1) data = json[1]
+
+    if(json[0].queueType == 'RANKED_FLEX_SR') data = json[1]
     else data = json[0]
-    
+
+
+    // console.log(data)
     return {
         queueType: data.queueType,
         tier: data.tier,
