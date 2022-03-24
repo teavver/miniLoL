@@ -8,15 +8,10 @@ import endReply from './embeds.js';
 const sp = ("%20");
 // create client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
-//
-
-const emojiArr = []
-
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
-
 
 
 client.on('interactionCreate', async interaction => {
@@ -32,7 +27,11 @@ client.on('interactionCreate', async interaction => {
     const dataEuw = await requestBasicData('euw1', username)
     if (dataEun.status == true && dataEuw.status == true) {
       const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting :arrow_up: for EUNE and :arrow_left: for EUW', fetchReply: true})
-      message.react('⬆️').then(() => message.react('⬅️'));
+     await message.react('⬆️').then(() => message.react('⬅️'))
+
+
+      // emoji_w = client.get_Emoji(123456) ????????
+      // message.react(emoji_w));
 
       const filter = (reaction, user) => {
         return ['⬆️', '⬅️'].includes(reaction.emoji.name) && user.id === interaction.user.id;
@@ -60,6 +59,17 @@ client.on('interactionCreate', async interaction => {
     }
     
   }
+  // euw command?
+
+  // if (commandName === 'euw') {
+  //   const username = replaceAll(options.getString('summoner')," ","%20")
+  //   const dataEuw = await requestBasicData('euw1', username)
+  //   if (dataEuw.status == true) {
+  //     reply(dataEuw, 'euw1', message, username)
+  //   } else {
+  //     message.reply('Summoner not found')
+  //   }
+  // }
 });
 // reply function
 
