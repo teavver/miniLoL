@@ -46,6 +46,7 @@ export async function requestSpecificData(_server, _Id) {
         queueType: data.queueType,
         tier: data.tier,
         rank: data.rank,
+        leaguePoints: data.lp,
         summonerName: data.summonerName,
         leaguePoints: data.leaguePoints,
         wins: data.wins,

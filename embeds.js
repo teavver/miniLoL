@@ -11,7 +11,7 @@ export default function endReply(data,data2,username,shortwr,serverText,tierImg)
     }
 
     else {
-        description = `${queueTypeText} **${data2.tier} ${data2.rank}** \n **${data2.wins}W / ${data2.losses}L\** | **${shortwr}%WR\**`
+        description = `${queueTypeText} **${data2.tier} ${data2.rank} ${data2.leaguePoints}LP** \n **${data2.wins}W / ${data2.losses}L\** | **${shortwr}%WR\**`
     }
     const endReply = new MessageEmbed()
     .setColor('#0099ff')
