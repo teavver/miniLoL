@@ -51,7 +51,6 @@ client.on('interactionCreate', async interaction => {
           message.reply('You reacted with neither a thumbs up, nor a thumbs down.');
         });
     } 
-
     else if (dataEuw.status == true && dataEun.status == false) {
       reply(dataEuw, 'euw1', interaction, username)
     } else if (dataEun.status == true && dataEuw.status == false) {
@@ -59,17 +58,17 @@ client.on('interactionCreate', async interaction => {
     }
     
   }
-  // euw command?
-
-  // if (commandName === 'euw') {
-  //   const username = replaceAll(options.getString('summoner')," ","%20")
-  //   const dataEuw = await requestBasicData('euw1', username)
-  //   if (dataEuw.status == true) {
-  //     reply(dataEuw, 'euw1', message, username)
-  //   } else {
-  //     message.reply('Summoner not found')
-  //   }
-  // }
+  if (commandName === 'euw') {
+    const username = replaceAll(options.getString('summoner')," ","%20")
+    const dataEuw = await requestBasicData('euw1', username)
+    if (dataEuw.status == true) {
+      reply(dataEuw, 'euw1', interaction, username)
+      // const message = await interaction.reply({content: 'why need interaction?', fetchReply: true})
+      // reply(dataEuw, 'euw1', message, username)
+    } else {
+      message.reply('Summoner not found')
+    }
+  }
 });
 // reply function
 
@@ -97,11 +96,9 @@ async function reply(_data, _server, interaction, _username) {
     // reaction = await interaction.guild.emojis.cache.find(emoji => emoji.name === dataSpec.tier.toLowerCase());
     
   }
-   
-   
-   const shortwr = (dataSpec.wins/(dataSpec.wins+dataSpec.losses)*100).toFixed(0)
-   const reply = endReply(_data,dataSpec,_username,shortwr,serverText, tierImgArr[dataSpec.tier])
-   interaction.reply({ embeds: [reply] })
+  const shortwr = (dataSpec.wins/(dataSpec.wins+dataSpec.losses)*100).toFixed(0)
+  const reply = endReply(_data,dataSpec,_username,shortwr,serverText, tierImgArr[dataSpec.tier])
+  interaction.reply({ embeds: [reply] })
  }
 
 
