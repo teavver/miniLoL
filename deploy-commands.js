@@ -7,7 +7,8 @@ const clientId = '954503990685626448'
 
 const commands = [
 	new SlashCommandBuilder().setName('user').setDescription('returns summoner info').addStringOption(option => option.setName('summoner').setDescription('summoner name')),
-	new SlashCommandBuilder().setName('euw').setDescription('returns euw summoner').addStringOption(option => option.setName('summoner').setDescription('euwcom'))
+	new SlashCommandBuilder().setName('euw').setDescription('returns euw summoner').addStringOption(option => option.setName('summoner').setDescription('summoner name')),
+	new SlashCommandBuilder().setName('eune').setDescription('returns eune summoner').addStringOption(option => option.setName('summoner').setDescription('summoner name'))
 ]
 	.map(commands => commands.toJSON());
 

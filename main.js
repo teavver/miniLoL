@@ -63,14 +63,21 @@ client.on('interactionCreate', async interaction => {
     const dataEuw = await requestBasicData('euw1', username)
     if (dataEuw.status == true) {
       reply(dataEuw, 'euw1', interaction, username)
-      // const message = await interaction.reply({content: 'why need interaction?', fetchReply: true})
-      // reply(dataEuw, 'euw1', message, username)
     } else {
-      message.reply('Summoner not found')
+      message.reply('(euw) Summoner not found')
+    }
+  }
+  if (commandName === 'eune') {
+    const username = replaceAll(options.getString('summoner')," ","%20")
+    const dataEun = await requestBasicData('eun1', username)
+    if (dataEun.status == true) {
+      reply(dataEun, 'eun1', interaction, username)
+    } else {
+      message.reply('(eune) Summoner not found')
     }
   }
 });
-// reply function
+// tier images
 
 const tierImgArr = {
   IRON: 'https://i.imgur.com/M3Rr4vi.png',
@@ -83,7 +90,7 @@ const tierImgArr = {
   GRANDMASTER: 'https://i.imgur.com/zo0jFrT.png',
   CHALLENGER: 'https://i.imgur.com/Tcj6YJH.png'
 }
-
+// reply function
 
 async function reply(_data, _server, interaction, _username) {
    const serverText = (_server==='eun1') ? 'eune':'euw'
