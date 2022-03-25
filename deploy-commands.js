@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { SlashCommandBuilder } from '@discordjs/builders'
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
-const guildId = '954502187164241932'
+const guildId = '542036183639654451'
 const clientId = '954503990685626448'
 
 const commands = [
