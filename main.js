@@ -8,15 +8,10 @@ import endReply from './embeds.js';
 const sp = ("%20");
 // create client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
-//
-
-const emojiArr = []
-
 
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
-
 
 
 client.on('interactionCreate', async interaction => {
@@ -32,7 +27,11 @@ client.on('interactionCreate', async interaction => {
     const dataEuw = await requestBasicData('euw1', username)
     if (dataEun.status == true && dataEuw.status == true) {
       const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting :arrow_up: for EUNE and :arrow_left: for EUW', fetchReply: true})
-      message.react('⬆️').then(() => message.react('⬅️'));
+     await message.react('⬆️').then(() => message.react('⬅️'))
+
+
+      // emoji_w = client.get_Emoji(123456) ????????
+      // message.react(emoji_w));
 
       const filter = (reaction, user) => {
         return ['⬆️', '⬅️'].includes(reaction.emoji.name) && user.id === interaction.user.id;
@@ -52,7 +51,6 @@ client.on('interactionCreate', async interaction => {
           message.reply('You reacted with neither a thumbs up, nor a thumbs down.');
         });
     } 
-
     else if (dataEuw.status == true && dataEun.status == false) {
       reply(dataEuw, 'euw1', interaction, username)
     } else if (dataEun.status == true && dataEuw.status == false) {
@@ -60,8 +58,26 @@ client.on('interactionCreate', async interaction => {
     }
     
   }
+  if (commandName === 'euw') {
+    const username = replaceAll(options.getString('summoner')," ","%20")
+    const dataEuw = await requestBasicData('euw1', username)
+    if (dataEuw.status == true) {
+      reply(dataEuw, 'euw1', interaction, username)
+    } else {
+      message.reply('(euw) Summoner not found')
+    }
+  }
+  if (commandName === 'eune') {
+    const username = replaceAll(options.getString('summoner')," ","%20")
+    const dataEun = await requestBasicData('eun1', username)
+    if (dataEun.status == true) {
+      reply(dataEun, 'eun1', interaction, username)
+    } else {
+      message.reply('(eune) Summoner not found')
+    }
+  }
 });
-// reply function
+// tier images
 
 const tierImgArr = {
   IRON: 'https://i.imgur.com/M3Rr4vi.png',
@@ -74,7 +90,7 @@ const tierImgArr = {
   GRANDMASTER: 'https://i.imgur.com/zo0jFrT.png',
   CHALLENGER: 'https://i.imgur.com/Tcj6YJH.png'
 }
-
+// reply function
 
 async function reply(_data, _server, interaction, _username) {
    const serverText = (_server==='eun1') ? 'eune':'euw'
@@ -87,11 +103,9 @@ async function reply(_data, _server, interaction, _username) {
     // reaction = await interaction.guild.emojis.cache.find(emoji => emoji.name === dataSpec.tier.toLowerCase());
     
   }
-   
-   
-   const shortwr = (dataSpec.wins/(dataSpec.wins+dataSpec.losses)*100).toFixed(0)
-   const reply = endReply(_data,dataSpec,_username,shortwr,serverText, tierImgArr[dataSpec.tier])
-   interaction.reply({ embeds: [reply] })
+  const shortwr = (dataSpec.wins/(dataSpec.wins+dataSpec.losses)*100).toFixed(0)
+  const reply = endReply(_data,dataSpec,_username,shortwr,serverText, tierImgArr[dataSpec.tier])
+  interaction.reply({ embeds: [reply] })
  }
 
 
