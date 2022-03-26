@@ -19,7 +19,7 @@ export default function endReply(data,data2,username,shortwr,serverText,tierImg)
     .setAuthor({iconURL:tierImg, name: `(${serverText.toUpperCase()}) (${data.summonerLevel}) ${data.name}`})
     // opgg link
     .setTitle(`${data.name}\'s OPGG`)
-    .setURL(`https://${serverText}.op.gg/summoners/eune/${username}`)
+    .setURL(`https://${serverText}.op.gg/summoners/${serverText}/${username}`)
     // data import from main.js 
     .setDescription(description)
     .setThumbnail(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
