@@ -31,7 +31,7 @@ export default async function commands(interaction){
           const reaction = collected.first();
       
           if (reaction.emoji.name === '⬆️') {
-            reply(dataEun, 'eun1', message, username)
+            reply(dataEun, 'eun1', interaction, username)
           } else {
             reply(dataEuw, 'euw1', message, username)
           }
@@ -73,7 +73,7 @@ export default async function commands(interaction){
   // HELP COMMAND
 
   if (commandName === 'help') {
-    interaction.reply({embeds: [helpReply]})
+    // interaction.reply('fsdfsdf')
 }
 }
  
