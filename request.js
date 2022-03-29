@@ -40,8 +40,6 @@ export async function requestSpecificData(_server, _Id) {
     else if (json[0].queueType == 'RANKED_TFT_PAIRS') data = json[2]
     else data = json[0]
 
-
-    // console.log(data)
     return {
         queueType: data.queueType,
         tier: data.tier,
@@ -54,15 +52,6 @@ export async function requestSpecificData(_server, _Id) {
     }
 
 }
-
-// export async function requestServer
-
-
-
-
-
-
-
 
 // export async function requestMatches(_server, _accountId) {
 //     const response = await fetch(`https://${_server}.api.riotgames.com/lol/v1.3/game/by-summoner/${_accountId}/recent`, {
