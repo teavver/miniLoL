@@ -18,12 +18,13 @@ const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 (async ()=> {
 	try {
 		await rest.put(Routes.applicationCommands(config.clientId), { body: commands })
+		console.log('Deploying...')
 	}
 	catch(err){
 		console.log(err)
 	}
 	
-})
+})()
 
 
 
