@@ -13,7 +13,6 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
 
-
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -28,10 +27,6 @@ client.on('interactionCreate', async interaction => {
     if (dataEun.status == true && dataEuw.status == true) {
       const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting :arrow_up: for EUNE and :arrow_left: for EUW', fetchReply: true})
      await message.react('⬆️').then(() => message.react('⬅️'))
-
-
-      // emoji_w = client.get_Emoji(123456) ????????
-      // message.react(emoji_w));
 
       const filter = (reaction, user) => {
         return ['⬆️', '⬅️'].includes(reaction.emoji.name) && user.id === interaction.user.id;

@@ -2,8 +2,7 @@ import 'dotenv/config';
 import { SlashCommandBuilder } from '@discordjs/builders'
 import { REST } from '@discordjs/rest'
 import { Routes } from 'discord-api-types/v9'
-const guildId = '542036183639654451'
-const clientId = '954503990685626448'
+import config from './config.js'
 
 const commands = [
 	new SlashCommandBuilder().setName('user').setDescription('returns summoner info').addStringOption(option => option.setName('summoner').setDescription('summoner name')),
@@ -14,6 +13,21 @@ const commands = [
 
 const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
 
-rest.put(Routes.applicationGuildCommands(clientId, guildId), { body: commands })
-	.then(() => console.log('Successfully registered application commands.'))
-	.catch(console.error);
+// GLOBAL
+
+(async ()=> {
+	try {
+		await rest.put(Routes.applicationCommands(config.clientId), { body: commands })
+	}
+	catch(err){
+		console.log(err)
+	}
+	
+})
+
+
+
+// DEVELOPMENT
+// rest.put(Routes.applicationGuildCommands(config.clientId, config.guildId), { body: commands })
+// 	.then(() => console.log('Successfully registered application commands.'))
+// 	.catch(console.error);
