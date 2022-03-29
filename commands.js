@@ -2,10 +2,14 @@ import reply from "./reply.js";
 import tierImgArr from './tiers.js';
 
 import {requestBasicData, requestSpecificData} from './request.js';
+import { helpReply } from "./embeds.js";
+import { Embed } from "@discordjs/builders";
 
 
 export default async function commands(interaction){
   const { commandName, options } = interaction;
+ 
+
 
   //USER COMMAND
 	if (commandName === 'user') {
@@ -51,7 +55,7 @@ export default async function commands(interaction){
     if (dataEuw.status == true) {
       reply(dataEuw, 'euw1', interaction, username)
     } else {
-      message.reply('(euw) Summoner not found')
+      interaction.reply(`\`[EUW] Summoner ${username}not found\``)
     }
   }
 
@@ -63,10 +67,16 @@ export default async function commands(interaction){
     if (dataEun.status == true) {
       reply(dataEun, 'eun1', interaction, username)
     } else {
-      message.reply('(eune) Summoner not found')
+      interaction.reply(`\`[EUNE] Summoner ${username}not found\``)
     }
   }
+  // HELP COMMAND
+
+  if (commandName === 'help') {
+    interaction.reply({embeds: [helpReply]})
 }
+}
+ 
 
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);

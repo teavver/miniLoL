@@ -30,3 +30,15 @@ export default function endReply(data,data2,username,shortwr,serverText,tierImg)
     // )
     return endReply;
 }
+
+export function helpReply() {
+    const helpReply = new MessageEmbed()
+    .setColor('GREEN')
+    .setTitle('How to use the bot')
+    .setDescription('description')
+    .addFields(
+        {name: '/User command', value: 'Use the /user command only if you don\'t know the server your summoner\'s playing on.'},
+        {name: '/Euw and /Eune command', value: 'Type in /euw or /eune followed by a space and your summoner\'s name to get their stats.'}
+    )
+    return helpReply;
+}
