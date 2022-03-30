@@ -1,6 +1,6 @@
 import { MessageEmbed } from "discord.js";
 
-export default function endReply(data,data2,username,shortwr,serverText,tierImg) {
+export function endReply(data,data2,username,shortwr,serverText,tierImg) {
     let description
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
     if (data2.queueType == undefined && data.summonerLevel < 30) {
@@ -33,9 +33,8 @@ export default function endReply(data,data2,username,shortwr,serverText,tierImg)
 
 export function helpReply() {
     const helpReply = new MessageEmbed()
-    .setColor('GREEN')
+    .setColor('#0099ff')
     .setTitle('How to use the bot')
-    .setDescription('description')
     .addFields(
         {name: '/User command', value: 'Use the /user command only if you don\'t know the server your summoner\'s playing on.'},
         {name: '/Euw and /Eune command', value: 'Type in /euw or /eune followed by a space and your summoner\'s name to get their stats.'}
