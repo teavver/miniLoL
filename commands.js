@@ -73,8 +73,8 @@ export default async function commands(interaction){
   // HELP COMMAND
 
   if (commandName === 'help') {
-    // interaction.reply('fsdfsdf')
-}
+    interaction.reply({ embeds: [helpReply] })
+  }
 }
  
 
