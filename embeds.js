@@ -37,7 +37,8 @@ export function helpReply() {
     .setTitle('How to use the bot')
     .addFields(
         {name: '/User command', value: 'Use the /user command only if you don\'t know the server your summoner\'s playing on.'},
-        {name: '/Euw and /Eune command', value: 'Type in /euw or /eune followed by a space and your summoner\'s name to get their stats.'}
+        {name: '/Euw and /Eune commands', value: 'Type in /euw or /eune followed by a space and your summoner\'s name to get their stats.'},
+        {name: 'Have fun!', value: '(Click the book emoji to close this message.)'}
     )
     return helpReply;
 }

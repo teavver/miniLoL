@@ -8,7 +8,6 @@ import { Embed } from "@discordjs/builders";
 
 export default async function commands(interaction){
   const { commandName, options } = interaction;
- 
 
 
   //USER COMMAND
@@ -72,10 +71,32 @@ export default async function commands(interaction){
   }
   // HELP COMMAND
 
-  if (commandName === 'help') {
-    interaction.reply({ embeds: [helpReply()] })
-  }
+//   if (commandName === 'help') {
+//     interaction.reply({ embeds: [helpReply()] })
+//   }
+// }
+
+//HELP COMMAND WITH REACTION
+if (commandName === 'help') {
+  const message = await interaction.reply({ embeds: [helpReply()], fetchReply: true})
+     await message.react('📖')
+
+// every time a reaction is added ...
+
+
+
+
+    //  const filter = (reaction, user) => {
+    //   return ['📖'].includes(reaction.emoji.name) && user.id === interaction.user.id;
+    // }
+
+    //   if (reaction.emoji.name === "📖") {
+    //   reaction.message.delete()
+    //   }
+
 }
+}
+
  
 
 function replaceAll(str, find, replace) {

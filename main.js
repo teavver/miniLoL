@@ -16,6 +16,15 @@ client.on('interactionCreate', async interaction => {
   commands(interaction)
 });
 
+client.on('messageReactionAdd', (reaction, user) => {
+  const message = reaction.message;
+  // if (message.author.id != client.user.id) return;
+  if (user.bot) return
+  if (reaction.emoji.name == '📖') {
+    reaction.message.delete();
+  }
+})
+
 
 // console.log(process.env.TOKEN)
 client.login(process.env.TOKEN)
