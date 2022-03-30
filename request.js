@@ -10,7 +10,7 @@ export async function requestBasicData(_server, _sumName){
     })
     const data = await response.json()
     const status = response.status
-    console.log(status)
+    // console.log(status)
     if (status == 404) {
         return {
             status: false
