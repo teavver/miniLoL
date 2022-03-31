@@ -32,11 +32,11 @@ export default async function commands(interaction){
           if (reaction.emoji.name === '⬆️') {
             reply(dataEun, 'eun1', interaction, username)
           } else {
-            reply(dataEuw, 'euw1', message, username)
+            reply(dataEuw, 'euw1', interaction, username)
           }
         })
         .catch(collected => {
-          message.reply('You reacted with neither a thumbs up, nor a thumbs down.');
+          message.reply("You didn't choose any server.");
         });
     } 
     else if (dataEuw.status == true && dataEun.status == false) {
@@ -79,7 +79,21 @@ export default async function commands(interaction){
 //HELP COMMAND WITH REACTION
 if (commandName === 'help') {
   const message = await interaction.reply({ embeds: [helpReply()], fetchReply: true})
-     await message.react('📖')
+  await message.react('📖')
+  const filter = (reaction, user) => {
+    return ['📖'].includes(reaction.emoji.name) && user.id === interaction.user.id;
+  }
+  message.awaitReactions({ filter, max: 1, time: 60000, errors: ['time'] })
+  .then(collected => {
+      const reaction = collected.first();
+      if (reaction.emoji.name === '📖') {
+        // interaction.reply()
+        setTimeout(() => message.delete(), 1000)
+      }
+  })
+  .catch(collected => {
+    setTimeout(() => message.delete(), 1000)
+  });
 
 // every time a reaction is added ...
 
