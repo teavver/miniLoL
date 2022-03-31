@@ -10,12 +10,7 @@ export async function requestBasicData(_server, _sumName){
     })
     const data = await response.json()
     const status = response.status
-    // console.log(status)
-    if (status == 404) {
-        return {
-            status: false
-        }
-    }
+    if (status == 404) return { status: false}
     return {
         accountId: data.accountId,
         name: data.name,
@@ -37,9 +32,18 @@ export async function requestSpecificData(_server, _Id) {
     let data
     if (json.length == 0) return {status:false}
 
-    if(json[0].queueType == 'RANKED_FLEX_SR') data = json[1]
-    else if (json[0].queueType == 'RANKED_TFT_PAIRS') data = json[2]
-    else data = json[0]
+
+    for (let i = 0; i < json.length; i++) {
+        const mode = json[i];
+        if(mode.queueType == 'RANKED_SOLO_5x5'){
+            data = mode;
+            break;
+        }
+        else data = 0;
+        
+    }
+
+    if (data === 0) return {status: false}
 
     return {
         queueType: data.queueType,
@@ -53,15 +57,3 @@ export async function requestSpecificData(_server, _Id) {
     }
 
 }
-
-// export async function requestMatches(_server, _accountId) {
-//     const response = await fetch(`https://${_server}.api.riotgames.com/lol/v1.3/game/by-summoner/${_accountId}/recent`, {
-//         method: 'get',
-//         headers: {
-//             "X-Riot-Token": process.env.RIOT_TOKEN
-//         }
-//     })
-//     const json = await response.json()
-//     const data = json[0]
-    
-// }

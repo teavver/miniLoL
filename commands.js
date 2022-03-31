@@ -18,19 +18,19 @@ export default async function commands(interaction){
     const dataEun = await requestBasicData('eun1', username)
     const dataEuw = await requestBasicData('euw1', username)
     if (dataEun.status == true && dataEuw.status == true) {
-      const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting :arrow_up: for EUNE and :arrow_left: for EUW', fetchReply: true})
-     await message.react('⬆️').then(() => message.react('⬅️'))
+      const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting 🇳 for EUNE and 🇼 for EUW', fetchReply: true})
+     await message.react('🇳').then(() => message.react('🇼'))
 
       const filter = (reaction, user) => {
-        return ['⬆️', '⬅️'].includes(reaction.emoji.name) && user.id === interaction.user.id;
+        return ['🇳', '🇼'].includes(reaction.emoji.name) && user.id === interaction.user.id;
       }
       
       message.awaitReactions({ filter, max: 1, time: 60000, errors: ['time'] })
         .then(collected => {
           const reaction = collected.first();
       
-          if (reaction.emoji.name === '⬆️') {
-            reply(dataEun, 'eun1', interaction, username)
+          if (reaction.emoji.name === '🇳') {
+            reply(dataEun, 'eun1', message, username)
           } else {
             reply(dataEuw, 'euw1', message, username)
           }
@@ -44,6 +44,9 @@ export default async function commands(interaction){
     } else if (dataEun.status == true && dataEuw.status == false) {
       reply(dataEun, 'eun1', interaction, username)
     }
+    else if (dataEuw.status == false && dataEun.status == false) {
+      interaction.reply(`\`Summoner ${options.getString('summoner')} not found\``)
+    }
     
   }
 
@@ -54,7 +57,7 @@ export default async function commands(interaction){
     if (dataEuw.status == true) {
       reply(dataEuw, 'euw1', interaction, username)
     } else {
-      interaction.reply(`\`[EUW] Summoner ${username}not found\``)
+      interaction.reply(`\`[EUW] Summoner ${options.getString('summoner')} not found\``)
     }
   }
 
@@ -66,34 +69,14 @@ export default async function commands(interaction){
     if (dataEun.status == true) {
       reply(dataEun, 'eun1', interaction, username)
     } else {
-      interaction.reply(`\`[EUNE] Summoner ${username}not found\``)
+      interaction.reply(`\`[EUNE] Summoner ${options.getString('summoner')} not found\``)
     }
   }
-  // HELP COMMAND
-
-//   if (commandName === 'help') {
-//     interaction.reply({ embeds: [helpReply()] })
-//   }
-// }
 
 //HELP COMMAND WITH REACTION
 if (commandName === 'help') {
   const message = await interaction.reply({ embeds: [helpReply()], fetchReply: true})
      await message.react('📖')
-
-// every time a reaction is added ...
-
-
-
-
-    //  const filter = (reaction, user) => {
-    //   return ['📖'].includes(reaction.emoji.name) && user.id === interaction.user.id;
-    // }
-
-    //   if (reaction.emoji.name === "📖") {
-    //   reaction.message.delete()
-    //   }
-
 }
 }
 
