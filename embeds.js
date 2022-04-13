@@ -22,6 +22,7 @@ export function endReply(data,data2,username,shortwr,serverText,tierImg) {
     // data import from main.js 
     .setDescription(description)
     .setThumbnail(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
+    // future field for recent matches (waiting for match v4 to get fixed zzzzz)
     // .addFields(
     //     { name: '\u200B', value: '\u200B' },
     //     { name: 'Ranked Solo/Duo', value: '*\*Win\**, 26:55', inline: true },

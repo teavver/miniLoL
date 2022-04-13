@@ -6,7 +6,7 @@ import commands from './commands.js';
 
 // create client
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
-
+// welcome message
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
 })
@@ -23,12 +23,5 @@ client.on('messageReactionAdd', (reaction, user) => {
     reaction.message.delete();
   }
 })
-
-
-// console.log(process.env.TOKEN)
-client.login(process.env.TOKEN)
-
-
-// client.ws.gateway(dsd)
 
 
