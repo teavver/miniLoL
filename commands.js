@@ -1,9 +1,6 @@
 import reply from "./reply.js";
-import tierImgArr from './tiers.js';
-
 import {requestBasicData, requestSpecificData} from './request.js';
 import { helpReply } from "./embeds.js";
-import { Embed } from "@discordjs/builders";
 
 
 export default async function commands(interaction){
