@@ -1,5 +1,5 @@
-# miniLoL.gg
-MiniLoL is a simple Discord Bot for checking LoL profiles and stats.
+# miniLoL 
+A simple Discord Bot for checking LoL profiles and stats.
 
 Available regions: EUW, EUNE
 
