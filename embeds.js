@@ -1,6 +1,7 @@
-import { MessageEmbed } from "discord.js";
+import pkg from 'discord.js';
+const {EmbedBuilder} = pkg;
 
-export function endReply(data,data2,username,shortwr,serverText,tierImg) {
+export function endReply(data,data2,username,shortwr,serverText,tierImg){
     let description
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
     if (data2.queueType == undefined && data.summonerLevel < 30) {
@@ -8,32 +9,27 @@ export function endReply(data,data2,username,shortwr,serverText,tierImg) {
     } else if (data2.queueType == undefined) {
         description = `Summoner has no rank or no recent ranked games`
     }
-
     else {
         description = `${queueTypeText} **${data2.tier} ${data2.rank} ${data2.leaguePoints}LP** \n **${data2.wins}W / ${data2.losses}L\** | **${shortwr}%WR\**`
     }
-    const endReply = new MessageEmbed()
+
+    const endReply = new EmbedBuilder()
     .setColor('#0099ff')
     // summoner name from main.js + jsbot icon
     .setAuthor({iconURL:tierImg, name: `(${serverText.toUpperCase()}) (${data.summonerLevel}) ${data.name}`})
     // opgg link
     .setTitle(`${data.name}\'s OPGG`)
-    .setURL(`https://${serverText}.op.gg/summoners/${serverText}/${username}`)
+    .setURL
+    (`https://${serverText}.op.gg/summoners/${serverText}/${username}`)
     // data import from main.js 
     .setDescription(description)
-    .setThumbnail(`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
-    // future field for recent matches (waiting for match v4 to get fixed zzzzz)
-    // .addFields(
-    //     { name: '\u200B', value: '\u200B' },
-    //     { name: 'Ranked Solo/Duo', value: '*\*Win\**, 26:55', inline: true },
-    //     { name: 'Ranked Solo/Duo', value: '*\*Loss\**, 16:32', inline: true },
-    //     { name: 'Ranked Solo/Duo', value: '*\*Win\**, 41:35', inline: true },
-    // )
+    .setThumbnail
+    (`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${data.profileIconId}.jpg`)
     return endReply;
 }
 
 export function helpReply() {
-    const helpReply = new MessageEmbed()
+    const helpReply = new EmbedBuilder()
     .setColor('#0099ff')
     .setTitle('How to use the bot')
     .addFields(

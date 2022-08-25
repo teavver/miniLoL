@@ -10,10 +10,9 @@ export default async function commands(interaction){
   //USER COMMAND
 	if (commandName === 'user') {
     const username = replaceAll(options.getString('summoner')," ","%20")
-    // console.log(username)
-		//const message = await interaction.reply({ content: username, fetchReply: true });
     const dataEun = await requestBasicData('eun1', username)
     const dataEuw = await requestBasicData('euw1', username)
+
     if (dataEun.status == true && dataEuw.status == true) {
       const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting 🇳 for EUNE and 🇼 for EUW', fetchReply: true})
      await message.react('🇳').then(() => message.react('🇼'))

@@ -20,7 +20,6 @@ export async function requestBasicData(_server, _sumName){
         status: true
     }
 }
-
 export async function requestSpecificData(_server, _Id) {
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${_Id}`, {
         method: 'get',
@@ -40,11 +39,8 @@ export async function requestSpecificData(_server, _Id) {
             break;
         }
         else data = 0;
-        
     }
-
     if (data === 0) return {status: false}
-
     return {
         queueType: data.queueType,
         tier: data.tier,
@@ -55,5 +51,4 @@ export async function requestSpecificData(_server, _Id) {
         wins: data.wins,
         losses: data.losses
     }
-
 }

@@ -1,4 +1,4 @@
-import {endReply} from './embeds.js';
+import { endReply } from './embeds.js';
 import { requestSpecificData } from './request.js';
 import tierImgArr from './tiers.js'
 export default async function reply(_data, _server, interaction, _username) {
