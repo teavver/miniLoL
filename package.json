@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "node main.js"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/teavver/jsbot.git"
