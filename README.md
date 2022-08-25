@@ -17,3 +17,5 @@ Add the miniLoL bot to your server using the [link](https://discord.com/api/oaut
 ### Example profile
 
 ![example](https://cdn.discordapp.com/attachments/952593892275007598/1012349593398288525/profile_gg.png)
+
+##### Tier icons made by emperor#5578
