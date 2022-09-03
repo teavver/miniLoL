@@ -3,6 +3,7 @@ import 'dotenv/config';
 import commands from './commands.js';
 import pkg from 'discord.js'
 import pkg2 from 'discord-api-types/v10';
+
 const { Client } = pkg;
 const { GatewayIntentBits } = pkg2
 const client = new Client({

@@ -10,7 +10,8 @@ export async function requestBasicData(_server, _sumName){
     })
     const data = await response.json()
     const status = response.status
-    if (status == 404) return { status: false}
+    // console.log(data)
+    if (status == 404) return { status: false }
     return {
         accountId: data.accountId,
         name: data.name,
@@ -20,6 +21,20 @@ export async function requestBasicData(_server, _sumName){
         status: true
     }
 }
+
+export async function requestMmrData(_server, _sumName){
+    const response = await fetch(`https://${_server}.whatismymmr.com/api/v1/summoner?name=${_sumName}`, {
+        method: 'get'
+    })
+    const data = await response.json()
+    if(data.error.code != undefined) {
+        const mmr = 'No recent activity'
+        return mmr
+    }
+    const mmr = data.ranked.avg
+    return mmr
+}
+
 export async function requestSpecificData(_server, _Id) {
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/league/v4/entries/by-summoner/${_Id}`, {
         method: 'get',

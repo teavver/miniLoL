@@ -1,5 +1,5 @@
 import reply from "./reply.js";
-import {requestBasicData, requestSpecificData} from './request.js';
+import {requestBasicData, requestSpecificData, requestMmrData} from './request.js';
 import { helpReply } from "./embeds.js";
 
 
@@ -11,8 +11,11 @@ export default async function commands(interaction){
 	if (commandName === 'user') {
     const username = replaceAll(options.getString('summoner')," ","%20")
     const dataEun = await requestBasicData('eun1', username)
+    // const mmrEun = await requestMmrData('eun1', username)
     const dataEuw = await requestBasicData('euw1', username)
+    // const mmrEuw = await requestMmrData('euw1', username) todo
 
+  // BOTH SERVERS CASE
     if (dataEun.status == true && dataEuw.status == true) {
       const message = await interaction.reply({content: 'Summoner name is taken on both EUW and EUNE servers, please specify the server by reacting 🇳 for EUNE and 🇼 for EUW', fetchReply: true})
      await message.react('🇳').then(() => message.react('🇼'))
@@ -50,8 +53,9 @@ export default async function commands(interaction){
   if (commandName === 'euw') {
     const username = replaceAll(options.getString('summoner')," ","%20")
     const dataEuw = await requestBasicData('euw1', username)
+    const mmrEuw = await requestMmrData('euw', username)
     if (dataEuw.status == true) {
-      reply(dataEuw, 'euw1', interaction, username)
+      reply(dataEuw, 'euw1', interaction, username, mmrEuw)
     } else {
       interaction.reply(`\`[EUW] Summoner ${options.getString('summoner')} not found\``)
     }
@@ -75,8 +79,6 @@ if (commandName === 'help') {
      await message.react('📖')
 }
 }
-
- 
 
 function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace);
