@@ -28,12 +28,14 @@ export async function requestMmrData(_server, _sumName){
     })
     const data = await response.json()
     if(data.error) {
-        const mmr = 'No data'
+        console.log('CANT FETCH')
+        console.log('error: '+ data.error.code)
+        const mmr = 'null'
         return mmr
     } else if (data.ranked) {
         const mmr = data.ranked.avg
         const err = data.ranked.err
-        const perc = data.ranked.percentile
+        const perc = (data.ranked.percentile != undefined) ? data.ranked.percentile : "0"
         console.log(perc)
         const mmr_all = [mmr, err, perc]
         return mmr_all
@@ -50,8 +52,6 @@ export async function requestSpecificData(_server, _Id) {
     const json = await response.json()
     let data
     if (json.length == 0) return {status:false}
-
-
     for (let i = 0; i < json.length; i++) {
         const mode = json[i];
         if(mode.queueType == 'RANKED_SOLO_5x5'){

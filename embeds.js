@@ -4,7 +4,9 @@ const {EmbedBuilder} = pkg;
 export function endReply(data,data2,username,shortwr,serverText,tierImg,mmr){
     const smallNumbers = '⁰¹²³⁴⁵⁶⁷⁸⁹'
     let description
+    // console.log(`mmr: ${mmr[0]}`) TROUBLESHOOT
     const top_or_bottom = (mmr[2] >= 50) ? 'top' : 'bottom'
+    const mmr_desc = (mmr[0] == null || mmr[0] == 'n') ? 'MMR: Not enough games played in the last 30 days' : `MMR: **${mmr[0]} ±${mmr[1]}** (${top_or_bottom} ${100 - mmr[2]}% of ${data2.tier[0]} ${data2.rank} summoners)`
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
     if (data2.queueType == undefined && data.summonerLevel < 30) {
         description = 'Summoner is below lvl 30.'
@@ -12,7 +14,7 @@ export function endReply(data,data2,username,shortwr,serverText,tierImg,mmr){
         description = `Summoner has no rank or no recent ranked games`
     }
     else {
-        description = `${queueTypeText} **${data2.tier} ${data2.rank} ${data2.leaguePoints}LP** \nGames: **${data2.wins} W** / **${data2.losses} L\** | **${shortwr}%WR\** \nMMR: **${mmr[0]} ±${mmr[1]}** (${top_or_bottom} ${100 - mmr[2]}% of ${data2.tier[0]} ${data2.rank} summoners)`
+        description = `${queueTypeText} **${data2.tier} ${data2.rank} ${data2.leaguePoints}LP** \nGames: **${data2.wins} W** / **${data2.losses} L\** | **${shortwr}%WR\** \n${mmr_desc}`
     }
 
     const endReply = new EmbedBuilder()
