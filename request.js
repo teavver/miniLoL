@@ -11,7 +11,6 @@ export async function requestBasicData(_server, _sumName){
     })
     const data = await response.json()
     const status = response.status
-    // console.log(data)
     if (status == 404) return { status: false }
     return {
         accountId: data.accountId,
@@ -33,7 +32,11 @@ export async function requestMmrData(_server, _sumName){
         return mmr
     } else if (data.ranked) {
         const mmr = data.ranked.avg
-        return mmr
+        const err = data.ranked.err
+        const perc = data.ranked.percentile
+        console.log(perc)
+        const mmr_all = [mmr, err, perc]
+        return mmr_all
     }
 }
 

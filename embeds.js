@@ -1,8 +1,10 @@
 import pkg from 'discord.js';
 const {EmbedBuilder} = pkg;
 
-export function endReply(data,data2,username,shortwr,serverText,tierImg,mmrAvg){
+export function endReply(data,data2,username,shortwr,serverText,tierImg,mmr){
+    const smallNumbers = '⁰¹²³⁴⁵⁶⁷⁸⁹'
     let description
+    const top_or_bottom = (mmr[2] >= 50) ? 'top' : 'bottom'
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
     if (data2.queueType == undefined && data.summonerLevel < 30) {
         description = 'Summoner is below lvl 30.'
@@ -10,7 +12,7 @@ export function endReply(data,data2,username,shortwr,serverText,tierImg,mmrAvg){
         description = `Summoner has no rank or no recent ranked games`
     }
     else {
-        description = `${queueTypeText} **${data2.tier} ${data2.rank} ${data2.leaguePoints}LP** \nGames: **${data2.wins} W** / **${data2.losses} L\** | **${shortwr}%WR\** \nMMR: **${mmrAvg}**`
+        description = `${queueTypeText} **${data2.tier} ${data2.rank} ${data2.leaguePoints}LP** \nGames: **${data2.wins} W** / **${data2.losses} L\** | **${shortwr}%WR\** \nMMR: **${mmr[0]} ±${mmr[1]}** (${top_or_bottom} ${100 - mmr[2]}% of ${data2.tier[0]} ${data2.rank} summoners)`
     }
 
     const endReply = new EmbedBuilder()
