@@ -2,11 +2,12 @@ import pkg from 'discord.js';
 const {EmbedBuilder} = pkg;
 
 export function endReply(data,data2,username,shortwr,serverText,tierImg,mmr){
-    const smallNumbers = '⁰¹²³⁴⁵⁶⁷⁸⁹'
+    // const small_numbers = '⁰¹²³⁴⁵⁶⁷⁸⁹'
+    const err_superscript = create_superscript_string(mmr[1])
     let description
     // console.log(`mmr: ${mmr[0]}`) TROUBLESHOOT
     const top_or_bottom = (mmr[2] >= 50) ? 'top' : 'bottom'
-    const mmr_desc = (mmr[0] == null || mmr[0] == 'n') ? 'MMR: Not enough games played in the last 30 days' : `MMR: **${mmr[0]} ±${mmr[1]}** (${top_or_bottom} ${100 - mmr[2]}% of ${data2.tier[0]} ${data2.rank} summoners)`
+    const mmr_desc = (mmr[0] == null || mmr[0] == 'n') ? 'MMR: Not enough games played in the last 30 days' : `MMR: **${mmr[0]}**±${err_superscript} (${top_or_bottom} ${100 - mmr[2]}% of ${data2.tier[0]} ${data2.rank} summoners)`
     const queueTypeText = (data2.queueType==='RANKED_SOLO_5x5') ? 'Solo Duo: ':'Flex: '
     if (data2.queueType == undefined && data.summonerLevel < 30) {
         description = 'Summoner is below lvl 30.'
@@ -49,4 +50,15 @@ export function notFound(server,summoner) {
     .setColor('#0099ff')
     .setTitle(`(${server}) Summoner ${summoner} not found.`)
     return notFound
+}
+
+function create_superscript_string(num) {
+	const template = "⁰¹²³⁴⁵⁶⁷⁸⁹";
+    let output = "";
+
+    while (num > 0) {
+  	output = template[num % 10] + output;
+  	num = Math.floor(num / 10);
+  }
+  return output;
 }
