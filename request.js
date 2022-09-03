@@ -1,5 +1,6 @@
 import fetch from "node-fetch"
 import 'dotenv/config';
+import { codeBlock } from "discord.js";
 
 export async function requestBasicData(_server, _sumName){
     const response = await fetch(`https://${_server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${_sumName}`, {
@@ -27,12 +28,13 @@ export async function requestMmrData(_server, _sumName){
         method: 'get'
     })
     const data = await response.json()
-    if(data.error.code != undefined) {
-        const mmr = 'No recent activity'
+    if(data.error) {
+        const mmr = 'No data'
+        return mmr
+    } else if (data.ranked) {
+        const mmr = data.ranked.avg
         return mmr
     }
-    const mmr = data.ranked.avg
-    return mmr
 }
 
 export async function requestSpecificData(_server, _Id) {
