@@ -1,4 +1,4 @@
-// Last update: discord.js v14
+// Last update: discord.js v14 --- 3.09.2022
 import 'dotenv/config';
 import commands from './commands.js';
 import pkg from 'discord.js'

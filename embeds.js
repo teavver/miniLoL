@@ -39,3 +39,10 @@ export function helpReply() {
     )
     return helpReply;
 }
+
+export function notFound(server,summoner) {
+    const notFound = new EmbedBuilder()
+    .setColor('#0099ff')
+    .setTitle(`(${server}) Summoner ${summoner} not found.`)
+    return notFound
+}

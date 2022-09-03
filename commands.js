@@ -1,19 +1,17 @@
 import reply from "./reply.js";
 import {requestBasicData, requestSpecificData, requestMmrData} from './request.js';
-import { helpReply } from "./embeds.js";
-
+import { helpReply , notFound } from "./embeds.js";
 
 export default async function commands(interaction){
   const { commandName, options } = interaction;
-
 
   //USER COMMAND
 	if (commandName === 'user') {
     const username = replaceAll(options.getString('summoner')," ","%20")
     const dataEun = await requestBasicData('eun1', username)
-    // const mmrEun = await requestMmrData('eun1', username)
+    const mmrEun = await requestMmrData('eune', username)
     const dataEuw = await requestBasicData('euw1', username)
-    // const mmrEuw = await requestMmrData('euw1', username) todo
+    const mmrEuw = await requestMmrData('euw', username)
 
   // BOTH SERVERS CASE
     if (dataEun.status == true && dataEuw.status == true) {
@@ -29,9 +27,9 @@ export default async function commands(interaction){
           const reaction = collected.first();
       
           if (reaction.emoji.name === '🇳') {
-            reply(dataEun, 'eun1', message, username)
+            reply(dataEun, 'eun1', message, username, mmrEun)
           } else {
-            reply(dataEuw, 'euw1', message, username)
+            reply(dataEuw, 'euw1', message, username, mmrEuw)
           }
         })
         .catch(collected => {
@@ -39,14 +37,15 @@ export default async function commands(interaction){
         });
     } 
     else if (dataEuw.status == true && dataEun.status == false) {
-      reply(dataEuw, 'euw1', interaction, username)
+      const mmrEuw = await requestMmrData('euw', username)
+      reply(dataEuw, 'euw1', interaction, username, mmrEuw)
     } else if (dataEun.status == true && dataEuw.status == false) {
-      reply(dataEun, 'eun1', interaction, username)
+      const mmrEun = await requestMmrData('eune', username)
+      reply(dataEun, 'eun1', interaction, username, mmrEun)
     }
     else if (dataEuw.status == false && dataEun.status == false) {
-      interaction.reply(`\`Summoner ${options.getString('summoner')} not found\``)
+      interaction.reply({ embeds: [notFound('EUNE & EUW', options.getString('summoner'))], fetchReply: true})
     }
-    
   }
 
   //EUW COMMAND
@@ -57,7 +56,7 @@ export default async function commands(interaction){
     if (dataEuw.status == true) {
       reply(dataEuw, 'euw1', interaction, username, mmrEuw)
     } else {
-      interaction.reply(`\`[EUW] Summoner ${options.getString('summoner')} not found\``)
+      interaction.reply({ embeds: [notFound('EUW', options.getString('summoner'))], fetchReply: true})
     }
   }
 
@@ -66,18 +65,19 @@ export default async function commands(interaction){
   if (commandName === 'eune') {
     const username = replaceAll(options.getString('summoner')," ","%20")
     const dataEun = await requestBasicData('eun1', username)
+    const mmrEun = await requestMmrData('eune', username)
     if (dataEun.status == true) {
-      reply(dataEun, 'eun1', interaction, username)
+      reply(dataEun, 'eun1', interaction, username, mmrEun)
     } else {
-      interaction.reply(`\`[EUNE] Summoner ${options.getString('summoner')} not found\``)
+      interaction.reply({ embeds: [notFound('EUNE', options.getString('summoner'))], fetchReply: true})
     }
   }
 
-//HELP COMMAND WITH REACTION
-if (commandName === 'help') {
-  const message = await interaction.reply({ embeds: [helpReply()], fetchReply: true})
-     await message.react('📖')
-}
+  //HELP COMMAND WITH REACTION
+  if (commandName === 'help') {
+    const message = await interaction.reply({ embeds: [helpReply()], fetchReply: true})
+      await message.react('📖')
+  }
 }
 
 function replaceAll(str, find, replace) {
